@@ -1,0 +1,35 @@
+Requirements:
+1. The configuration requirements:
+    a. The watchdog configuration should be read on startup from the plain text file (any
+    common configuration format is acceptable: YAML, JSON, INI, etc.) => Done by json read
+    b. The configuration should be reloaded dynamically when the changes are made in
+    the configuration file => Done
+    c. The configuration file should describe the list of processes/applications which
+    need to be monitored by watchdog => Done
+    d. Each monitored process/application in the configuration file can have startup
+    parameters => Done
+2. The processing requirements:
+    a. All the configured processes/applications should be checked on startup and
+    started with the configured startup parameters if they are not running already +> Done
+    b. If a new process/application is added into the configuration file after the watchdog
+    is already started - the watchdog should dynamically check and start such new
+    process/application with the configured startup parameters => Done
+    c. If one of the configured processes/applications is stopped or killed - it should be
+    automatically restarted by watchdog with the configured startup parameters
+    d. All the processes/applications removed from the configuration file after the
+    watchdog is already started should no longer be monitored and restarted by the
+    watchdog (until such processes/applications are added back to the configuration
+    file)
+    e. The process/application monitoring should be implemented using system events
+    or periodic checks or both
+3. All the Native OS API should be implemented as a separate component
+    a. This component should encapsulate all the Native API details and provide a
+    simple interface for all the actions
+    b. There should not be any other way to access the Native OS API, only through
+    this component
+    c. It should be possible to implement support of other operating systems (for
+    example support Windows in addition to Linux) by extending the component
+4. All the meaningful events and actions done by watchdog should be logged into the
+system event log and available for the later review and analysis
+5. All the essential watchdog workflows should be covered by integration tests
+6. All the individual component methods should be covered by unit tests
